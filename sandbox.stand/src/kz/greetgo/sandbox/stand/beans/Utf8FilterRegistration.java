@@ -35,6 +35,8 @@ public class Utf8FilterRegistration implements WebAppContextRegistration, Filter
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
     throws IOException, ServletException {
 
+    System.out.println("asd");
+
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
     chain.doFilter(request, response);

@@ -5,11 +5,11 @@ import java.io.File;
 @SuppressWarnings("unused")
 public class Modules {
   public static File parentDir() {
-    if (new File("sandbox.client").isDirectory()) {
+    if (new File("sandbox.controller").isDirectory()) {
       return new File(".");
     }
 
-    if (new File("../sandbox.client").isDirectory()) {
+    if (new File("../sandbox.controller").isDirectory()) {
       return new File("..");
     }
 
@@ -41,10 +41,6 @@ public class Modules {
     }
 
     throw new IllegalArgumentException("Cannot find directory " + moduleName);
-  }
-
-  public static File clientDir() {
-    return findDir("sandbox.client");
   }
 
   public static File dbDir() {

@@ -32,8 +32,8 @@ public class StandServer implements HasAfterInject {
   @Override
   public void afterInject() throws Exception {
     WebAppContext webAppServlet = new WebAppContext(
-      Modules.clientDir().toPath().resolve(".").toString(),
-      "/access");
+      Modules.controllerDir().toPath().resolve("share").toString(),
+      "/share");
 
     webAppContextRegistrations.get().stream()
       .sorted(Comparator.comparingDouble(WebAppContextRegistration::priority))
