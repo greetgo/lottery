@@ -11,12 +11,8 @@ dependencies {
   testCompile "kz.greetgo.depinject:greetgo.depinject.gen:$depinjectVersion"
 }
 
-//war.dependsOn project(':sandbox.client').build
-//war.dependsOn beanContainerJar
-
 task generateBeanContainerJavas(type: JavaExec) {
   ext.genDir = "${project.buildDir}/generated/bean_container_impl"
-//  dependsOn autoimplJar
 
   main = 'kz.greetgo.sandbox.server.war.GenerateAndCompileBeanContainers'
   args = ["${genDir}"]
@@ -31,12 +27,7 @@ task beanContainerJar(type: Jar) {
 }
 
 war {
-  dependsOn project(':sandbox.client').build
   dependsOn beanContainerJar
-
-  doFirst {
-//    println(project(':sandbox.client').buildDir.toPath().resolve('product').toFile())
-  }
 
   baseName 'sandbox'
 
@@ -44,7 +35,6 @@ war {
 
   classpath beanContainerJar
 
-  from project(':sandbox.client').buildDir.toPath().resolve('product').toFile()
 }
 
 static def addExcludes(rootSpec) {
