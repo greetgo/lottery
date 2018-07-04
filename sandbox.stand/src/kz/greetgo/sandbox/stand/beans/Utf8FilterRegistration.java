@@ -25,7 +25,7 @@ public class Utf8FilterRegistration implements WebAppContextRegistration, Filter
 
   @Override
   public double priority() {
-    return -200;
+    return -300;
   }
 
   @Override

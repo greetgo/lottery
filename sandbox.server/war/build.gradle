@@ -29,7 +29,7 @@ task beanContainerJar(type: Jar) {
 war {
   dependsOn beanContainerJar
 
-  baseName 'sandbox'
+  baseName 'lottery'
 
   addExcludes rootSpec
 
