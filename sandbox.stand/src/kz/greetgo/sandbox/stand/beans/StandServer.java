@@ -20,6 +20,8 @@ public class StandServer implements HasAfterInject {
     System.err.println("[[[                                ]]]");
     System.err.println("[[[ Stand server has been launched ]]]");
     System.err.println("[[[                                ]]]");
+    System.err.println("Goto http://localhost:1313/lottery/api/lottery");
+
     return this;
   }
 

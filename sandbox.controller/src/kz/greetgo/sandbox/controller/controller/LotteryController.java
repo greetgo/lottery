@@ -4,9 +4,13 @@ import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.mvc.annotations.Json;
 import kz.greetgo.mvc.annotations.Mapping;
+import kz.greetgo.mvc.annotations.MethodFilter;
 import kz.greetgo.mvc.annotations.RequestInput;
 import kz.greetgo.mvc.annotations.ToJson;
+import kz.greetgo.mvc.core.RequestMethod;
+import kz.greetgo.sandbox.controller.model.SZWagerAck;
 import kz.greetgo.sandbox.controller.model.SZWagerReq;
+import kz.greetgo.sandbox.controller.model.help.HtmlText;
 import kz.greetgo.sandbox.controller.model.help.JsText;
 import kz.greetgo.sandbox.controller.register.HelpRegister;
 import kz.greetgo.sandbox.controller.register.LotteryRegister;
@@ -23,6 +27,7 @@ public class LotteryController implements Controller {
   @ToJson
   @NoSecurity
   @Mapping("/jquery.js")
+  @MethodFilter(RequestMethod.GET)
   public JsText jQuery() {
     return helpRegister.get().jQuery();
   }
@@ -30,6 +35,7 @@ public class LotteryController implements Controller {
   @ToJson
   @NoSecurity
   @Mapping({"/", ""})
+  @MethodFilter(RequestMethod.GET)
   public Object root() {
     return helpRegister.get().lottery();
   }
@@ -37,10 +43,16 @@ public class LotteryController implements Controller {
   @ToJson
   @NoSecurity
   @Mapping("/sell_ticket")
-  public Object sellTicket(@RequestInput @Json SZWagerReq req) {
-    if (req != null && req.filled()) {
-      return lotteryRegister.get().sellTicket(req);
-    }
+  @MethodFilter(RequestMethod.GET)
+  public HtmlText sellTicketGET(@RequestInput @Json SZWagerReq req) {
     return helpRegister.get().lotterySellTicket();
+  }
+
+  @ToJson
+  @NoSecurity
+  @Mapping("/sell_ticket")
+  @MethodFilter(RequestMethod.POST)
+  public SZWagerAck sellTicket(@RequestInput @Json SZWagerReq req) {
+    return lotteryRegister.get().sellTicket(req);
   }
 }
