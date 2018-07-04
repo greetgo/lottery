@@ -12,6 +12,8 @@ import kz.greetgo.mvc.interfaces.SessionParameterGetter;
 import kz.greetgo.mvc.interfaces.Views;
 import kz.greetgo.sandbox.controller.errors.JsonRestError;
 import kz.greetgo.sandbox.controller.errors.RestError;
+import kz.greetgo.sandbox.controller.model.help.HtmlText;
+import kz.greetgo.sandbox.controller.model.help.JsText;
 import kz.greetgo.sandbox.controller.register.AuthRegister;
 import kz.greetgo.sandbox.controller.register.model.SessionInfo;
 import kz.greetgo.sandbox.controller.security.NoSecurity;
@@ -39,7 +41,21 @@ public abstract class SandboxViews implements Views {
    */
   @Override
   public String toJson(Object object, RequestTunnel tunnel, Method method) throws Exception {
-    return convertToJson(object);
+    if (object instanceof HtmlText) {
+      HtmlText htmlText = (HtmlText) object;
+      tunnel.setResponseContentType("text/html;charset=utf-8");
+      return htmlText.text();
+    }
+    if (object instanceof JsText) {
+      JsText jsText = (JsText) object;
+      tunnel.setResponseContentType("text/javascript;charset=utf-8");
+      return jsText.text();
+    }
+
+    {
+      tunnel.setResponseContentType("application/json;charset=utf-8");
+      return convertToJson(object);
+    }
   }
 
   private String convertToJson(Object object) throws Exception {

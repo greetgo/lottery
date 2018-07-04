@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lottery Sell Ticket HELP</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    form {
+      display: flex;
+      flex-direction: row;
+    }
+
+    form .field {
+      padding-bottom: 0.4em;
+    }
+
+    form .field .el {
+      width: 14em;
+      height: 1.2em;
+    }
+
+    form .field select.el {
+      height: 1.55em;
+    }
+
+    .col-group-title {
+      color: #4c4846;
+    }
+
+    .col-group label, .col-group .label {
+      width: 12em;
+      display: inline-block;
+      text-align: right;
+    }
+
+    .calling {
+      margin-top: 1em;
+    }
+
+    .calling .post {
+      font-weight: bold;
+    }
+
+    .calling table td {
+      padding: 0.3em;
+    }
+
+    .calling table tr td.title {
+      margin-right: 0.3em;
+      text-align: right;
+    }
+
+    .calling table tr td.value {
+      padding-left: 0.3em;
+      padding-right: 0.3em;
+    }
+
+    .code {
+      background-color: bisque;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Продажа билета</h1>
+
+<form method="post">
+  <div class="col-group">
+    <div class="field">
+      <span class="label"></span>
+      <span class="col-group-title">SZ_Wager_Req</span>
+    </div>
+    <div class="field">
+      <label for="TVN">TVN =</label>
+      <input type="number" id="TVN" class="el changing" value="26374">
+    </div>
+    <div class="field">
+      <label for="operatorIndex">operatorIndex =</label>
+      <input type="number" id="operatorIndex" class="el changing" value="13">
+    </div>
+  </div>
+  <div class="col-group">
+    <div class="field">
+      <span class="label"></span>
+      <span class="col-group-title">WAGER_BET_DATA</span>
+    </div>
+    <div class="field">
+      <label for="onlineGameNo">onlineGameNo =</label>
+      <select id="onlineGameNo" class="el changing">
+        <option value="1" selected>1 : Lotto</option>
+        <option value="2">2 : Daily Keno</option>
+        <option value="3">3 : Cash 3</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="onlineBetModeNo">onlineBetModeNo =</label>
+      <input type="number" id="onlineBetModeNo" class="el changing" value="42">
+    </div>
+  </div>
+</form>
+
+<div class="calling">
+  <table cellspacing="0" cellpadding="0">
+    <tr>
+      <td class="title">Запрос:</td>
+      <td class="value" colspan="2"><span class="post">POST /lottery/api/lottery/sell_ticket</span></td>
+    </tr>
+    <tr>
+      <td class="title">Тело запроса:</td>
+      <td class="value code" id="callingJson"></td>
+      <td>
+        <button id="buttonCall">Вызвать →</button>
+      </td>
+      <td class="code" id="jsonResult" style="visibility: hidden">
+
+      </td>
+    </tr>
+  </table>
+</div>
+
+<script src="URL_PREFIX/lottery/jquery.js"></script>
+<script>
+
+  function getJson() {
+    var tvn = document.getElementById("TVN").value;
+    var operatorIndex = document.getElementById("operatorIndex").value;
+    var onlineGameNo = document.getElementById("onlineGameNo").value;
+    var onlineBetModeNo = document.getElementById("onlineBetModeNo").value;
+    return {
+      TVN: tvn,
+      operatorIndex: operatorIndex,
+      wagerBetData: {
+        onlineGameNo: onlineGameNo,
+        onlineBetModeNo: onlineBetModeNo
+      }
+    };
+  }
+
+  function update() {
+    document.getElementById("callingJson").innerHTML = "<pre>" + JSON.stringify(getJson(), null, 2) + "</pre>";
+  }
+
+  $("#buttonCall").on('click', function () {
+
+    console.log("Call", getJson());
+    $.ajax({
+      url: "URL_PREFIX/lottery/sell_ticket",
+      data: JSON.stringify(getJson()),
+      contentType: 'application/json',
+      type: 'POST',
+      success: function (jsonData) {
+        document.getElementById("jsonResult").innerHTML = "<pre>" + JSON.stringify(jsonData, null, 2) + "</pre>";
+        document.getElementById("jsonResult").style.visibility = 'visible';
+      }
+    });
+  });
+
+  update();
+  $(".changing").on("keyup", update).on("change", update);
+</script>
+</body>
+</html>

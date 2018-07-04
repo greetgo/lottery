@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Сервисы лотереи</title>
+  <style>
+
+
+    body {
+      font-family: sans-serif;
+    }
+
+    .service-list tr th {
+      color: #4c4846;
+      text-align: left;
+      padding: 0.5em;
+      border-bottom: 2px solid black;
+    }
+
+    .service-list tr td {
+      padding: 0.5em;
+      border-bottom: 1px solid #5c5c5c;
+    }
+
+    .service-list tr td a {
+      text-decoration: none;
+    }
+
+    .service-list .name .title {
+      color: #0c0909;
+    }
+
+    .service-list .name .description {
+      color: #777371;
+      padding-left: 1em;
+      font-size: 90%;
+      width: 25em;
+      margin-top: 0.3em;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Сервисы лотереи</h1>
+
+<table cellpadding="0" cellspacing="0" class="service-list">
+  <tr>
+    <th>Имя сервиса и описание</th>
+    <th>Ссылка</th>
+  </tr>
+  <tr>
+    <td class="name">
+      <div class="title">Продажа билета</div>
+      <div class="description">
+        Здесь более детальное описание сервиса, которое
+        занимает много строк текста.
+      </div>
+    </td>
+    <td>
+      <a href="URL_PREFIX/lottery/sell_ticket">URL_PREFIX/lottery/sell_ticket</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="name">
+      <div class="title">Продажа билета</div>
+      <div class="description">
+        Здесь не очень длинное описание
+      </div>
+    </td>
+    <td>
+      <a href="URL_PREFIX/lottery/sell_ticket">URL_PREFIX/lottery/sell_ticket</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="name">
+      <div class="title">Ещё сервис</div>
+    </td>
+    <td>
+      <a href="#">URL_PREFIX/Path/To/Service</a>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

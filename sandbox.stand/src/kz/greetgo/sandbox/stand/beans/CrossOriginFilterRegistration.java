@@ -45,7 +45,7 @@ public class CrossOriginFilterRegistration implements WebAppContextRegistration,
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-    printRequestInfo(request);
+//    printRequestInfo(request);
 
     response.addHeader("Access-Control-Allow-Credentials", "true");
     response.addHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));

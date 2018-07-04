@@ -33,7 +33,7 @@ public class StandServer implements HasAfterInject {
   public void afterInject() throws Exception {
     WebAppContext webAppServlet = new WebAppContext(
       Modules.controllerDir().toPath().resolve("share").toString(),
-      "/share");
+      "/lottery");
 
     webAppContextRegistrations.get().stream()
       .sorted(Comparator.comparingDouble(WebAppContextRegistration::priority))
