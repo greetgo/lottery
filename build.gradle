@@ -34,7 +34,7 @@ subprojects {
   repositories {
     mavenLocal()
     if (ggRepo?.trim()) maven { url ggRepo.trim() }
-    jcenter()
+    mavenCentral()
   }
 
   dependencies {
