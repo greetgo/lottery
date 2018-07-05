@@ -12,7 +12,6 @@ public class SZWagerReq {
   public int operatorIndex;
   public WagerBetData wagerBetData = new WagerBetData();
 
-
   public boolean filled() {
     return TVN > 0;
   }

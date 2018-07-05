@@ -13,6 +13,15 @@ public class SZWagerAck {
   public boolean isFreeTicket;
   public long ticketNo;
 
+  @Override
+  public String toString() {
+    return "SZWagerAck{" +
+      "transactionDateBetNet=" + transactionDateBetNet +
+      ", isFreeTicket=" + isFreeTicket +
+      ", ticketNo=" + ticketNo +
+      '}';
+  }
+
   public byte[] serialize() {
     try {
       ByteArrayOutputStream bOut = new ByteArrayOutputStream();

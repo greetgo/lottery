@@ -1,11 +1,11 @@
 package kz.greetgo.sandbox.db.register_impl;
 
 import kz.greetgo.depinject.core.Bean;
+import kz.greetgo.depinject.core.BeanGetter;
 import kz.greetgo.sandbox.controller.model.SZWagerAck;
 import kz.greetgo.sandbox.controller.model.SZWagerReq;
 import kz.greetgo.sandbox.controller.register.LotteryRegister;
-
-import java.util.Date;
+import kz.greetgo.sandbox.db.in_service.BinService;
 
 @Bean
 public class LotteryRegisterImpl implements LotteryRegister {
@@ -14,15 +14,10 @@ public class LotteryRegisterImpl implements LotteryRegister {
     return "OK 2";
   }
 
+  public BeanGetter<BinService> binService;
+
   @Override
   public SZWagerAck sellTicket(SZWagerReq req) {
-
-    System.out.println("sellTicket " + req);
-
-    SZWagerAck ret = new SZWagerAck();
-    ret.isFreeTicket = true;
-    ret.ticketNo = 123;
-    ret.transactionDateBetNet = new Date();
-    return ret;
+    return binService.get().call(req);
   }
 }
