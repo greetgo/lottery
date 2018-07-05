@@ -2,10 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lottery Sell Ticket HELP</title>
+  <title>Сервис по продаже билетов</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Open Sans', sans-serif;
+      display: flex;
+      justify-content: center;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    button {
+      font-family: 'Open Sans', sans-serif;
+      border-radius: 0.1em;
+      padding: 0.3em;
+      border: 2px solid #b9b9b9;
+    }
+
+    button:hover {
+      border: 2px solid #cccccc;
+    }
+
+    button:active {
+      background-color: #ececec;
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    .description {
+      font-size: 90%;
+    }
+
+    .description p {
+      max-width: 65em;
+      margin: 0.4em 0 0 1em;
+      color: #444141;
+    }
+
+    .content {
+      display: inline-block;
+    }
+
+    .content-main {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      padding: 1em;
+      margin-top: 1em;
     }
 
     form {
@@ -19,11 +65,18 @@
 
     form .field .el {
       width: 14em;
-      height: 1.2em;
+      height: 1.6em;
+      padding-left: 0.2em;
+      padding-right: 0.2em;
+      border-radius: 0.2em;
+      border: 1px inset;
+      font-family: 'Open Sans', sans-serif;
     }
 
     form .field select.el {
-      height: 1.55em;
+      height: 1.95em;
+      width: 14.5em;
+      background-color: #dcdcdc;
     }
 
     .col-group-title {
@@ -59,69 +112,94 @@
     }
 
     .code {
-      background-color: bisque;
+      background-color: #fff5ee;
+      border-radius: 0.3em;
     }
   </style>
 </head>
 <body>
-
-<h1>Продажа билета</h1>
-
-<form method="post">
-  <div class="col-group">
-    <div class="field">
-      <span class="label"></span>
-      <span class="col-group-title">SZ_Wager_Req</span>
-    </div>
-    <div class="field">
-      <label for="TVN">TVN =</label>
-      <input type="number" id="TVN" class="el changing" value="26374">
-    </div>
-    <div class="field">
-      <label for="operatorIndex">operatorIndex =</label>
-      <input type="number" id="operatorIndex" class="el changing" value="13">
-    </div>
+<div class="content">
+  <h1>Продажа билета</h1>
+  <div class="description">
+    <p>
+      Здесь более делатльное описание сервиса.
+      Также здесь приводиться описание входных и выходных параметров.
+      Это очень длинный абзац. Это очень длинный абзац. Это очень длинный абзац.
+      Это очень длинный абзац. Это очень длинный абзац. Это очень длинный абзац. Это очень длинный абзац.
+    </p>
+    <p>
+      Описание может содержать несколько абзацев.
+    </p>
   </div>
-  <div class="col-group">
-    <div class="field">
-      <span class="label"></span>
-      <span class="col-group-title">WAGER_BET_DATA</span>
+
+  <div class="content-main">
+
+    <form method="post">
+      <div class="col-group">
+        <div class="field">
+          <span class="label"></span>
+          <span class="col-group-title">SZ_Wager_Req</span>
+        </div>
+        <div class="field">
+          <label for="TVN">TVN =</label>
+          <input type="number" id="TVN" class="el changing" value="26374">
+        </div>
+        <div class="field">
+          <label for="operatorIndex">operatorIndex =</label>
+          <input type="number" id="operatorIndex" class="el changing" value="13">
+        </div>
+      </div>
+      <div class="col-group">
+        <div class="field">
+          <span class="label"></span>
+          <span class="col-group-title">WAGER_BET_DATA</span>
+        </div>
+        <div class="field">
+          <label for="onlineGameNo">onlineGameNo =</label>
+          <select id="onlineGameNo" class="el changing">
+            <option value="1" selected>1 : Lotto</option>
+            <option value="2">2 : Daily Keno</option>
+            <option value="3">3 : Cash 3</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="onlineBetModeNo">onlineBetModeNo =</label>
+          <input type="number" id="onlineBetModeNo" class="el changing" value="42">
+        </div>
+      </div>
+    </form>
+
+    <div class="calling">
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="title">Запрос:</td>
+          <td class="value" colspan="2"><span class="post">POST /lottery/api/lottery/sell_ticket</span></td>
+        </tr>
+        <tr>
+          <td class="title">Тело запроса:</td>
+          <td class="value code" id="callingJson"></td>
+          <td>
+            <button id="buttonCall">Вызвать ➡</button>
+          </td>
+          <td class="code" id="jsonResult" style="visibility: hidden">
+
+          </td>
+        </tr>
+      </table>
     </div>
-    <div class="field">
-      <label for="onlineGameNo">onlineGameNo =</label>
-      <select id="onlineGameNo" class="el changing">
-        <option value="1" selected>1 : Lotto</option>
-        <option value="2">2 : Daily Keno</option>
-        <option value="3">3 : Cash 3</option>
-      </select>
-    </div>
-    <div class="field">
-      <label for="onlineBetModeNo">onlineBetModeNo =</label>
-      <input type="number" id="onlineBetModeNo" class="el changing" value="42">
-    </div>
+
   </div>
-</form>
 
-<div class="calling">
-  <table cellspacing="0" cellpadding="0">
-    <tr>
-      <td class="title">Запрос:</td>
-      <td class="value" colspan="2"><span class="post">POST /lottery/api/lottery/sell_ticket</span></td>
-    </tr>
-    <tr>
-      <td class="title">Тело запроса:</td>
-      <td class="value code" id="callingJson"></td>
-      <td>
-        <button id="buttonCall">Вызвать →</button>
-      </td>
-      <td class="code" id="jsonResult" style="visibility: hidden">
-
-      </td>
-    </tr>
-  </table>
 </div>
 
 <script src="URL_PREFIX/lottery/jquery.js"></script>
+
+<!-- TODO pompei Удалить ссылку-->
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
 <script>
 
   function getJson() {
@@ -160,6 +238,18 @@
 
   update();
   $(".changing").on("keyup", update).on("change", update);
+
+  <!-- TODO pompei Удалить ниже-->
+
+  // document.getElementById("jsonResult").innerHTML = "<pre>" + JSON.stringify({
+  //   asd: 'asd asd asd asd asd asd',
+  //   dsa: 'dsa',
+  //   wow: {
+  //     1: 1, 2: 2, 3: 3, 4: 'qwe qwe qwe qwe qwe qwe qwe qqe ewq ewq ewq ewq ewq ewq'
+  //   }
+  // }, null, 2) + "</pre>";
+  // document.getElementById("jsonResult").style.visibility = 'visible';
+
 </script>
 </body>
 </html>
