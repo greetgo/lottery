@@ -3,4 +3,5 @@ dependencies {
   compile "kz.greetgo.depinject:greetgo.depinject:$depinjectVersion"
 
   compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
+  compile 'org.testng:testng:6.9.6'
 }

@@ -44,10 +44,11 @@ subprojects {
     ext.greetgoConfVersion = '0.1.5'
     ext.greetgoMvcVersion = "2.0.7"
     ext.jettyVersion = '9.4.0.v20161208'
-    ext.guavaVersion = '23.0'
+    ext.guavaVersion = '25.1-jre'
 
     testCompile 'org.testng:testng:6.5.1'
     compile 'org.easytesting:fest-assert-core:2.0M10'
+    compile group: 'com.google.guava', name: 'guava', version: "$guavaVersion"
 
     //compile 'com.google.code.findbugs:annotations:2.0.1'
   }
