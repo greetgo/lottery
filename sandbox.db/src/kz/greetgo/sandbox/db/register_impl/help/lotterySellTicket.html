@@ -40,12 +40,17 @@
 
     .description p {
       max-width: 65em;
+      width: 65em;
       margin: 0.4em 0 0 1em;
       color: #444141;
     }
 
     .content {
       display: inline-block;
+    }
+
+    .param-help {
+      min-height: 5em;
     }
 
     .content-main {
@@ -79,6 +84,15 @@
       background-color: #dcdcdc;
     }
 
+    form .field .param-ref {
+      cursor: pointer;
+    }
+
+    form .field .param-ref:hover {
+      color: red;
+      text-decoration: underline;
+    }
+
     .col-group-title {
       color: #4c4846;
     }
@@ -99,6 +113,12 @@
 
     .calling table td {
       padding: 0.3em;
+      vertical-align: top;
+    }
+
+    .calling table td .td-content {
+      margin-top: 0.5em;
+      display: inline-block;
     }
 
     .calling table tr td.title {
@@ -121,14 +141,23 @@
 <div class="content">
   <h1>Продажа билета</h1>
   <div class="description">
-    <p>
-      Здесь более делатльное описание сервиса.
-      Также здесь приводиться описание входных и выходных параметров.
-      Это очень длинный абзац. Это очень длинный абзац. Это очень длинный абзац.
-      Это очень длинный абзац. Это очень длинный абзац. Это очень длинный абзац. Это очень длинный абзац.
+    <p id="par-t-TVN" class="param-help" style="display:none">
+      <b>TVN</b>: The attribute contains the transaction verification number of a transaction.
+      Next transaction number used by the terminal. It is stored locally in the terminal and checked by the LGS.
+      The transaction verification number wraps from 65535 back to 1. 0 identifies an invalid TVN in case of memory
+      problems of the terminal.
     </p>
-    <p>
-      Описание может содержать несколько абзацев.
+    <p id="par-t-operatorIndex" class="param-help" style="display:none">
+      <b>operatorIndex</b>: The value is the index of the operator (clerk) in the array of all operators,
+      which was sent to the terminal in the sign-on ack (refer to Signon_Ack).
+    </p>
+    <p id="par-t-onlineGameNo" class="param-help" style="display:none">
+      <b>onlineGameNo</b>: The attribute contains the unique number identifying an online-game.
+      This number is known by the terminal, too.
+    </p>
+    <p id="par-t-onlineBetModeNo" class="param-help" style="display:none">
+      <b>onlineBetModeNo</b>: The attribute contains the sequential number which uniquely identifies
+      the online play type within the online game.
     </p>
   </div>
 
@@ -143,10 +172,12 @@
         <div class="field">
           <label for="TVN">TVN =</label>
           <input type="number" id="TVN" class="el changing" value="26374">
+          <span id="t-TVN" class="param-ref">?</span>
         </div>
         <div class="field">
           <label for="operatorIndex">operatorIndex =</label>
           <input type="number" id="operatorIndex" class="el changing" value="13">
+          <span id="t-operatorIndex" class="param-ref">?</span>
         </div>
       </div>
       <div class="col-group">
@@ -161,10 +192,12 @@
             <option value="2">2 : Daily Keno</option>
             <option value="3">3 : Cash 3</option>
           </select>
+          <span id="t-onlineGameNo" class="param-ref">?</span>
         </div>
         <div class="field">
           <label for="onlineBetModeNo">onlineBetModeNo =</label>
           <input type="number" id="onlineBetModeNo" class="el changing" value="42">
+          <span id="t-onlineBetModeNo" class="param-ref">?</span>
         </div>
       </div>
     </form>
@@ -176,14 +209,12 @@
           <td class="value" colspan="2"><span class="post">POST /lottery/api/lottery/sell_ticket</span></td>
         </tr>
         <tr>
-          <td class="title">Тело запроса:</td>
+          <td class="title"><span class="td-content">Тело запроса:</span></td>
           <td class="value code" id="callingJson"></td>
           <td>
-            <button id="buttonCall">Вызвать ➡</button>
+            <button class="td-content" id="buttonCall">Вызвать ➡</button>
           </td>
-          <td class="code" id="jsonResult" style="visibility: hidden">
-
-          </td>
+          <td class="code" id="jsonResult" style="visibility: hidden"></td>
         </tr>
       </table>
     </div>
@@ -195,12 +226,10 @@
 <script src="URL_PREFIX/lottery/jquery.js"></script>
 
 <!-- TODO pompei Удалить ссылку-->
-<!--
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
--->
+<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" -->
+        <!--integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" -->
+        <!--crossorigin="anonymous"></script>-->
+
 
 <script>
 
@@ -238,8 +267,19 @@
     });
   });
 
+  function showParam(refId) {
+    $('.param-help').hide();
+    $('#par-' + refId).show();
+  }
+
   update();
   $(".changing").on("keyup", update).on("change", update);
+
+  $('.param-ref').on("click", function () {
+    showParam(this.id);
+  });
+
+  showParam("t-TVN");
 
   <!-- TODO pompei Удалить ниже-->
 
